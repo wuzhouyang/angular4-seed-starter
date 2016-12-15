@@ -1,11 +1,16 @@
-import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
-import { enableProdMode } from '@angular/core';
+//主入口文件
+import { platformBrowserDynamic } from '@angular/platform-browser-dynamic'
+import { enableProdMode } from '@angular/core'
 
-import { AppModule } from './app/app.module';
+import { AppModule } from './app/app.module'
 
-import './assets/style/index.css'
+import './assets/styles/index.scss'
 
-if (process.env.ENV === 'prod' || process.env.ENV === 'aot') {
-  enableProdMode();
+import './favicon.ico'
+
+if (process.env.NODE_ENV === 'prod') {
+    enableProdMode()
 }
 platformBrowserDynamic().bootstrapModule(AppModule);
+
+

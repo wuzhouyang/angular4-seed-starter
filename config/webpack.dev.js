@@ -1,4 +1,6 @@
-
+//开发模式下 webpack 配置
+//develop webpack config
+var webpack=require('webpack')
 var webpackMerge = require('webpack-merge');
 var ExtractTextPlugin = require('extract-text-webpack-plugin');
 var commonConfig = require('./webpack.common.js');
@@ -12,15 +14,16 @@ module.exports = webpackMerge(commonConfig, {
         filename: '[name].js',
         chunkFilename: '[name].chunk.js'
     },
+    
     plugins: [
         new ExtractTextPlugin('[name].css')
     ],
+    
     devServer: {
         historyApiFallback: true,
         stats: 'minimal',
-        inline:false,
         host:'0.0.0.0',
         port: 8111,
-        compress: false
-    }
+        contentBase:'src/'
+    },
 });

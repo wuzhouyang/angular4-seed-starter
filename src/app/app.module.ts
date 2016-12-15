@@ -1,21 +1,42 @@
-import { NgModule } from '@angular/core'
-import { BrowserModule }  from '@angular/platform-browser'
-import { HttpModule } from '@angular/http'
+import { NgModule, ApplicationRef } from '@angular/core'
+import { BrowserModule } from '@angular/platform-browser'
+import {
+    removeNgStyles,
+    createNewHosts,
+    createInputTransfer
+} from '@angularclass/hmr'
 
-import { AppComponent } from './app.component'
 import { AppRoutingModule } from './app-routing.module'
+import { SharedModule } from './shared/shared.module'
+import { CoreModule } from './core/core.module'
+import { AppComponent } from './app.component'
 
 @NgModule({
-    providers:[
-    ],
-    imports: [
-        BrowserModule,
-        HttpModule,
-        AppRoutingModule,
-    ],
     declarations: [
         AppComponent
     ],
-    bootstrap: [ AppComponent ]
+    imports: [
+        AppRoutingModule,
+        BrowserModule,
+        CoreModule.forRoot(),
+        SharedModule.forRoot()
+    ],
+    bootstrap: [
+        AppComponent
+    ]
 })
-export class AppModule { }
+// hmr config
+export class AppModule {
+    constructor(public appRef: ApplicationRef) { }
+    hmrOnInit(store:any) {
+    }
+    hmrOnDestroy(store:any) {
+        let cmpLocation = this.appRef.components.map(cmp => cmp.location.nativeElement)
+        store.disposeOldHosts = createNewHosts(cmpLocation)
+        removeNgStyles()
+    }
+    hmrAfterDestroy(store:any) {
+        store.disposeOldHosts()
+        delete store.disposeOldHosts
+    }
+}
