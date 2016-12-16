@@ -1,8 +1,10 @@
 # angular2-seed-starter
-An angular2 starter with webpack2+aot+lazyload+hmr  
-个人搭的angular2 starter，使用webpack2，包含aot、lazyload、热替换功能等等  
+An angular2 starter with webpack2+aot+lazyload+hmr+scss
+个人搭的angular2 starter，使用webpack2，包含aot、lazyload、scss、热替换功能等等  
 ## screenShot     截图
 ![app](https://github.com/wuzhouyang/angular2-seed-starter/blob/master/src/assets/screenShot/screenshot.png)  
+## effect  效果
+![effect](https://github.com/wuzhouyang/angular2-seed-starter/blob/master/src/assets/screenShot/effect.png) 
 ## usage of command line 命令行用法
 > `npm install`   
 
