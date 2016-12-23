@@ -32,14 +32,13 @@ module.exports = {
                 loader:
                     isProd?
                     [
-                        '@ngtools/webpack',
-                        'angular2-load-children-loader'
+                        '@ngtools/webpack'
                     ]:
                     [
                         '@angularclass/hmr-loader',
                         'angular2-template-loader',
                         'awesome-typescript-loader',
-                        'angular2-load-children-loader'
+                        'angular2-router-loader'
                     ]
             },
             {

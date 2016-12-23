@@ -4,11 +4,11 @@ import { Routes, RouterModule } from '@angular/router'
 const routes:Routes=[
 	{
 		path:'lazyload-1',
-		loadChildren:'es6-promise-loader?,[name]!./lazyload1/lazyload1.module#LazyLoad1Module',
+		loadChildren:'./lazyload1/lazyload1.module#LazyLoad1Module',
 	},
 	{
 		path:'lazyload-2',
-		loadChildren:'es6-promise-loader?,[name]!./lazyload2/lazyload2.module#LazyLoad2Module',
+		loadChildren:'./lazyload2/lazyload2.module#LazyLoad2Module',
 	}
 ]
 @NgModule({
