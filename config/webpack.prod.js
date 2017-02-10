@@ -16,7 +16,7 @@ module.exports = webpackMerge(commonConfig, {
         chunkFilename: '[id].[hash].chunk.js'
     },
     plugins: [
-        new webpack.NoErrorsPlugin(),
+        new webpack.NoEmitOnErrorsPlugin(),
         new ExtractTextPlugin('[name].[hash].css'),
         new webpack.optimize.UglifyJsPlugin({
             comments: false,

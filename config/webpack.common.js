@@ -96,10 +96,10 @@ module.exports = {
              name: ['main', 'vendor', 'polyfills']
         }),
 
-        new webpack.ContextReplacementPlugin(
+        !isProd?new webpack.ContextReplacementPlugin(
             /angular(\\|\/)core(\\|\/)(esm(\\|\/)src|src)(\\|\/)linker/,
             __dirname
-        ),
+        ):()=>{},
 
         new webpack.LoaderOptionsPlugin({
             options:{
