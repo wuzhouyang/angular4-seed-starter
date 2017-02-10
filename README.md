@@ -19,5 +19,5 @@ An angular2 starter with webpack2+aot+lazyload+hmr+scss
 > This starter does not contain the Front end Test.  
 > 此项目没有包含前端测试功能及框架。  
 
-> Just use the @ngtool/webpack 1.1.4 now,if you install the new edition,it may have some error.  
-> 目前使用 @ngtool/webpack 1.1.4版本，如果你安装了新的版本，可能会出问题。  
+> Just use the @ngtool/webpack 1.2.8 and webpack@2.2.0 now.
+> 目前使用 @ngtool/webpack 1.2.8版本 还有 webpack 2.2.0版本。
