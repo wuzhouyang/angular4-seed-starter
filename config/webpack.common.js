@@ -12,7 +12,7 @@ module.exports = {
     entry: {
         'polyfills': './src/polyfills.ts',
         'vendor': './src/vendor.ts',
-        'main': './src/main.ts'
+        'main': isProd?'./src/main.aot.ts':'./src/main.jit.ts'
     },
     //查找依赖文件路径
     resolve: {
