@@ -12,7 +12,7 @@ module.exports = {
     entry: {
         'polyfills': './src/polyfills.ts',
         'vendor': './src/vendor.ts',
-        'main': isProd?'./src/main.aot.ts':'./src/main.jit.ts'
+        'main': './src/main.ts'
     },
     //查找依赖文件路径
     resolve: {
@@ -44,10 +44,6 @@ module.exports = {
             {
                 test: /\.html$/,
                 loader: 'html-loader'
-            },
-            {
-                test: /\.(png|jpe?g|gif|svg|woff|woff2|ttf|eot)$/,
-                loader: 'file-loader?name=assets/[name].[hash].[ext]!image-webpack-loader'
             },
             {
                 test:/\.json$/,
@@ -87,6 +83,30 @@ module.exports = {
                     helpers.root('src', 'app')
                 ],
                 loader:'to-string-loader!css-loader!sass-loader'
+            },
+            {
+                test: /\.(svg|woff|woff2|ttf|eot)$/,
+                //loader说明：file（处理文件名）
+                use: [
+                    {
+                        loader: 'file-loader',
+                        options: {
+                            name: 'assets/iconfonts/[name].[hash].[ext]'
+                        }
+                    }
+                ]
+            },
+            {
+                test: /\.(png|jpe?g|gif)$/,
+                use: [
+                    {
+                        loader: 'url-loader',
+                        options:{
+                            limit:1024,
+                            name:'assets/imgs/[name].[hash].[ext]'
+                        }
+                    }
+                ]
             }
         ]
     },

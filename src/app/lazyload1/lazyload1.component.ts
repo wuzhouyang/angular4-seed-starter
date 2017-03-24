@@ -5,7 +5,11 @@ import { Component } from '@angular/core'
     template:`
         <p>这是lazyload加载的第一个模块!</p>
         <p>this is the first module with lazyload!</p>
-    `
+        <div class="llimage"></div>
+    `,
+    styleUrls:[
+        './lazyload.scss'
+    ]
 })
 export class Lazyload1Component{
     constructor(){}
