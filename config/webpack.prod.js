@@ -3,7 +3,7 @@
 var webpack = require('webpack');
 var webpackMerge = require('webpack-merge');
 var ExtractTextPlugin = require('extract-text-webpack-plugin');
-var commonConfig = require('./webpack.common.js');
+var commonConfig = require('./webpack.common');
 var helpers = require('./helpers');
 var ngtools = require('@ngtools/webpack');
 
@@ -17,12 +17,24 @@ module.exports = webpackMerge(commonConfig, {
     },
     plugins: [
         new webpack.NoEmitOnErrorsPlugin(),
-        new ExtractTextPlugin('[name].[hash].css'),
+        new ExtractTextPlugin({
+            filename: '[name].[hash].css',
+            disable: false,
+            allChunks: true
+        }),
+        //最小化 (minify) 
         new webpack.optimize.UglifyJsPlugin({
-            comments: false,
-            compress: true,
             mangle: true,
             screw_ie8: true,
+            beautify: false,
+            comments: false,
+            compress: {
+                warnings: false,
+                warnings: true,
+                drop_console: false,
+                collapse_vars: true,
+                reduce_vars: true
+            }
         }),
         new webpack.LoaderOptionsPlugin({
             options: {

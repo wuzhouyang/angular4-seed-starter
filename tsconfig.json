@@ -18,7 +18,6 @@
         "dist"
     ],
     "angularCompilerOptions": {
-        "skipMetadataEmit": true,
-        "genDir": "./ngFactory"
+        "skipMetadataEmit": true
     }
 }

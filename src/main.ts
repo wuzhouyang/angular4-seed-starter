@@ -6,6 +6,4 @@ import { AppModule } from './app/app.module'
 
 import './assets/styles/index.scss'
 
-import './favicon.ico'
-
 platformBrowserDynamic().bootstrapModule(AppModule)

@@ -1,12 +1,13 @@
 var webpack = require('webpack');
 var HtmlWebpackPlugin = require('html-webpack-plugin');
 var ExtractTextPlugin = require('extract-text-webpack-plugin');
+var CopyWebpackPlugin = require('copy-webpack-plugin');
 
 var helpers = require('./helpers');
 
 //获取命令行下设置的环境变量
-var env=process.env.NODE_ENV;
-var isProd=env==='prod';
+var env = process.env.NODE_ENV;
+var isProd = env === 'prod';
 
 module.exports = {
     entry: {
@@ -29,11 +30,9 @@ module.exports = {
         loaders: [
             {
                 test: /\.ts$/,
-                loader:
-                    isProd?
-                    [
-                        '@ngtools/webpack'
-                    ]:
+                use:
+                isProd ?
+                    ['@ngtools/webpack'] :
                     [
                         '@angularclass/hmr-loader',
                         'angular2-template-loader',
@@ -43,50 +42,61 @@ module.exports = {
             },
             {
                 test: /\.html$/,
-                loader: 'html-loader'
-            },
-            {
-                test:/\.json$/,
-                exclude:[
-                    helpers.root('src','assets','i18n')
-                ],
-                loader:'file-loader?name=assets/[name].[ext]'
-            },
-            {
-                test:/favicon.ico$/,
-                loader: 'file-loader?name=[name].[ext]'
+                use: ['html-loader']
             },
             {
                 test: /\.css$/,
                 exclude: [
                     helpers.root('src', 'app')
                 ],
-                loader: ExtractTextPlugin.extract({fallbackLoader:'style-loader',loader:'css-loader'})
+                use: ExtractTextPlugin.extract({
+                    fallback: 'style-loader',
+                    use: [
+                        {
+                            loader: 'css-loader',
+                            options: {
+                                minimize: true
+                            }
+                        }
+                    ]
+                })
             },
             {
                 test: /\.css$/,
                 include: [
                     helpers.root('src', 'app')
                 ],
-                loader:'to-string-loader!css-loader'
+                use: [
+                    { loader: 'to-string-loader' },
+                    { loader: 'css-loader' }
+                ]
             },
             {
                 test: /\.scss$/,
                 exclude: [
                     helpers.root('src', 'app')
                 ],
-                loader: ExtractTextPlugin.extract({fallbackLoader:'style-loader',loader:'css-loader!sass-loader'})
+                use: ExtractTextPlugin.extract({
+                    fallback: 'style-loader',
+                    use: [
+                        { loader: 'css-loader' },
+                        { loader: 'sass-loader' }
+                    ]
+                })
             },
             {
                 test: /\.scss$/,
                 include: [
                     helpers.root('src', 'app')
                 ],
-                loader:'to-string-loader!css-loader!sass-loader'
+                use: [
+                    { loader: 'to-string-loader' },
+                    { loader: 'css-loader' },
+                    { loader: 'sass-loader' }
+                ]
             },
             {
                 test: /\.(svg|woff|woff2|ttf|eot)$/,
-                //loader说明：file（处理文件名）
                 use: [
                     {
                         loader: 'file-loader',
@@ -101,9 +111,9 @@ module.exports = {
                 use: [
                     {
                         loader: 'url-loader',
-                        options:{
-                            limit:1024,
-                            name:'assets/imgs/[name].[hash].[ext]'
+                        options: {
+                            limit: 1024,
+                            name: 'assets/imgs/[name].[hash].[ext]'
                         }
                     }
                 ]
@@ -113,17 +123,26 @@ module.exports = {
 
     plugins: [
         new webpack.optimize.CommonsChunkPlugin({
-             name: ['main', 'vendor', 'polyfills']
+            name: ['main', 'vendor', 'polyfills']
         }),
 
-        !isProd?new webpack.ContextReplacementPlugin(
+        !isProd ? new webpack.ContextReplacementPlugin(
             /angular(\\|\/)core(\\|\/)(esm(\\|\/)src|src)(\\|\/)linker/,
             __dirname
-        ):()=>{},
+        ) : () => { },
+
+        //直接复制一些静态资源
+        //copy some static resource
+        new CopyWebpackPlugin([
+            {
+                from: helpers.root('src', 'favicon.ico'),
+                to: helpers.root('dist', 'favicon.ico')
+            }
+        ]),
 
         new webpack.LoaderOptionsPlugin({
-            options:{
-                postcss:[
+            options: {
+                postcss: [
                     require('autoprefixer')
                 ]
             }
